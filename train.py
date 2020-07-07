@@ -128,7 +128,7 @@ def trainProcess():
     ###
     if (torch.cuda.is_available() == True):
         model = model.to("cuda")
-    if (torch.cuda.device_count() > 1)
+    if (torch.cuda.device_count() > 1):
         model = nn.DataParallel(model)
     ###
     
@@ -136,7 +136,7 @@ def trainProcess():
     criterion = nn.CrossEntropyLoss()
     ###
     if (torch.cuda.is_available() == True):
-        model = model.to("cuda")
+        criterion = criterion.to("cuda")
     ###
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     best_val = float(0)
@@ -168,7 +168,7 @@ def trainProcess():
 
         # Print validation accuracy and best validation accuracy
         best_val = max(lossval, best_val)
-        print '** Validation: %f (best) - %f (current)' % (best_val, lossval)
+        print('** Validation: %f (best) - %f (current)' % (best_val, lossval))
 
 
 
