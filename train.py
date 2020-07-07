@@ -47,6 +47,11 @@ def trainEpoch(train_loader, model, criterion, optimizer, epoch):
 
         # get the inputs
         inputs, labels = data
+        ###
+        if (torch.cuda.is_available() == True):
+            inputs = inputs.to("cuda")
+            labels = labels.to("cuda")
+        ###
 
         # zero the parameter gradients
         optimizer.zero_grad()
@@ -80,6 +85,11 @@ def valEpoch(val_loader, model, criterion, epoch):
 
             # get the inputs
             inputs, labels = data
+            ###
+            if (torch.cuda.is_available() == True):
+                inputs = inputs.to("cuda")
+                labels = labels.to("cuda")
+        ###
 
             # forward + backward + optimize
             outputs = model(inputs)
@@ -115,9 +125,19 @@ def trainProcess():
 
     # Load model
     model = Net()
-
+    ###
+    if (torch.cuda.is_available() == True):
+        model = model.to("cuda")
+    if (torch.cuda.device_count() > 1)
+        model = nn.DataParallel(model)
+    ###
+    
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()
+    ###
+    if (torch.cuda.is_available() == True):
+        model = model.to("cuda")
+    ###
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     best_val = float(0)
 
